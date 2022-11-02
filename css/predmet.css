@@ -72,15 +72,15 @@ li {
     border: 2px solid black;
 }
 
-.plava {
+.izborni {
     background-color: powderblue;
 }
 
-.siva {
+.ne_idu {
     background-color: gray;
 }
 
-.bijela {
+.redovni {
     background-color: white;
 }
 
