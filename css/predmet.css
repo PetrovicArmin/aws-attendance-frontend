@@ -2,6 +2,7 @@ html {
     scroll-padding-top: 180px;
 }
 
+
 body {
     width: 100%;
     margin: 0px;
@@ -11,10 +12,15 @@ body {
 #meni {
     text-align: center; 
     width: 100%;
-    position: sticky;
+    position: fixed;
     top: 0px;
     font-size: larger;
     background-color: antiquewhite;
+}
+
+#kontejner {
+    min-width: 260px; /*min. širina poslije koje se narušava izgled menija/grid panela*/
+    overflow-x: scroll;
 }
 
 .meni1 {
@@ -36,6 +42,7 @@ li {
 }
 
 .sadrzaj {
+    padding-top: 150px;
     text-align: center;
 }
 
@@ -81,6 +88,10 @@ li {
     html {
         scroll-padding-top: 40px;
     }    
+
+    .sadrzaj {
+        padding-top: 10px;
+    }
  
     #meni {
         position: static;
@@ -90,8 +101,4 @@ li {
         display: block;
         text-align: center;
     }   
-}
-
-@media only screen and (max-width: 300px) {
-    
 }
