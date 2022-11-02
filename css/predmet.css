@@ -75,3 +75,18 @@ li {
 .bijela {
     background-color: white;
 }
+
+@media only screen and (max-width: 1004px) {
+    html {
+        scroll-padding-top: 40px;
+    }    
+ 
+    #meni {
+        position: static;
+    }
+    
+    .meni1 {
+        display: block;
+        text-align: center;
+    }   
+}
