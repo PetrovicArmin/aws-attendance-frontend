@@ -56,6 +56,7 @@ li {
     padding: 5px;
     border: 2px solid black;
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(auto-fill, 200px);
     grid-gap: 10px;
 }
@@ -89,4 +90,8 @@ li {
         display: block;
         text-align: center;
     }   
+}
+
+@media only screen and (max-width: 300px) {
+    
 }
