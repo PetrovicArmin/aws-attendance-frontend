@@ -41,46 +41,26 @@ li {
     color:blueviolet;
 }
 
-#ri {
-
+.grid_kontejner {
+    padding: 20px;
+    border: 2px solid black;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    grid-gap: 10px;
 }
 
-#aie {
-
+.predmet {
+    border: 2px solid black;
 }
 
-#ee {
-
+.plava {
+    background-color: powderblue;
 }
 
-#tk {
-
+.siva {
+    background-color: gray;
 }
 
-.rs_1 {
-
-}
-
-.rs_2 {
-
-}
-
-.bsc_1 {
-
-}
-
-.bsc_2 {
-
-}
-
-.bsc_3 {
-
-}
-
-.msc_1 {
-
-}
-
-.msc_2 {
-
+.bijela {
+    background-color: white;
 }
