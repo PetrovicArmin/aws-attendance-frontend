@@ -4,7 +4,6 @@ body {
 
 .predmet_info {
     margin-bottom: 20px;
-    display: grid;
     text-align: center;
     border: 2px solid rosybrown;
     font-style: italic;
@@ -41,5 +40,10 @@ td, th {
     text-align: center;
 }
 
+@media only screen and (max-width: 683px) {
+    html {
+        min-width: 685px;
+    }
+}
 
 
