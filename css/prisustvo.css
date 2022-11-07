@@ -24,5 +24,13 @@ td, th {
     vertical-align: top;
 }
 
+.zelena {
+    background-color: lightgreen;
+}
+
+.crvena {
+    background-color: lightcoral;
+}
+
 
 
