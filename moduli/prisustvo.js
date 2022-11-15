@@ -103,64 +103,6 @@ let prisustvo = TabelaPrisustvo(div, {
 			"predavanja": 2,
 			"vjezbe": 0,
 			"index": 12345
-		},
-		{
-			"sedmica": 9,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12346
-		},{
-			"sedmica": 9,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12345
-		},
-		{
-			"sedmica": 10,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12346
-		},
-        {
-			"sedmica": 10,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12346
-		},
-        {
-			"sedmica": 11,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12346
-		},
-        {
-			"sedmica": 11,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12345
-		},
-		{
-			"sedmica": 12,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12346
-		},{
-			"sedmica": 12,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12345
-		},
-		{
-			"sedmica": 13,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12346
-		},
-        {
-			"sedmica": 13,
-			"predavanja": 2,
-			"vjezbe": 0,
-			"index": 12346
 		}
 	],
 	"predmet": "Razvoj mobilnih aplikacija",

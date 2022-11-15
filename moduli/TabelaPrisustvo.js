@@ -4,14 +4,13 @@ const prisustvaStudenataTrenutneSedmice = [];
 
 let TabelaPrisustvo = function (divRef, podaci) {
     //formula za pristup zadnjoj koloni: |rb_kolone + 2 + br_predavanja + br_vjezbi - 1|
-    //formula za pristup trenutnoj koloni: |rb_kolone + 2|
 
     divRef.innerHTML = "";
 
     //treba validirati podatke ovdje!
     const ukupnoStudenata = podaci.studenti.length;
     //const trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica - 3;
-    const trenutnaSedmica = 7;
+    const trenutnaSedmica = 1;
     let posljednjaRazmatranaSedmica = 0;
 
     const tabela = document.createElement('table');
@@ -88,10 +87,18 @@ let TabelaPrisustvo = function (divRef, podaci) {
         html += `<tr> ${htmlSadrzaj} </tr>`;
     });
 
+    //dodavanje odgovarajućeg broja col tagova
+    for (let k = 1; k < 2 + posljednjaRazmatranaSedmica + podaci.brojPredavanjaSedmicno + podaci.brojVjezbiSedmicno; k++)
+        html += "<col>";
 
+    let preostaloKolona = 15 - posljednjaRazmatranaSedmica;
+    if (preostaloKolona > 10)
+        preostaloKolona = 10;
+    
+    const postotakSirine = (preostaloKolona / 2) * 10;
+
+    html += `<col style="width:${postotakSirine}%;">`;
     tabela.innerHTML = html;
-
-    //ovdje još treba dodati mnoštvo <col> tagova!
     divRef.appendChild(tabela);
 
     //implementacija metoda
