@@ -10,7 +10,8 @@ let TabelaPrisustvo = function (divRef, podaci) {
 
     //treba validirati podatke ovdje!
     const ukupnoStudenata = podaci.studenti.length;
-    const trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica - 3;
+    //const trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica - 3;
+    const trenutnaSedmica = 7;
     let posljednjaRazmatranaSedmica = 0;
 
     const tabela = document.createElement('table');
@@ -61,7 +62,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
                     tekst = "XV";
                 else 
                     tekst = `${sedmiceTekstualno[posljednjaRazmatranaSedmica+1]}-XV`
-                htmlSadrzaj += `<td>${tekst}</td>`;
+                htmlSadrzaj += `<th>${tekst}</th>`;
             }
 
             html += `<tr> ${htmlSadrzaj}  </tr>`;                
