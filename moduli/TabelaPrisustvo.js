@@ -54,11 +54,26 @@ let TabelaPrisustvo = function (divRef, podaci) {
     
     redovi.forEach((htmlSadrzaj, index) => {
         if (index == 0) {
-            html += `<tr> ${htmlSadrzaj} </tr>`;                
+            let tekst = "";
+
+            if (posljednjaRazmatranaSedmica != 15) {
+                if (posljednjaRazmatranaSedmica == 14)
+                    tekst = "XV";
+                else 
+                    tekst = `${sedmiceTekstualno[posljednjaRazmatranaSedmica+1]}-XV`
+                htmlSadrzaj += `<td>${tekst}</td>`;
+            }
+
+            html += `<tr> ${htmlSadrzaj}  </tr>`;                
             return;
         }
 
-        htmlSadrzaj += `</tr> <tr> \n`;
+        let dodatak = "";
+        if (posljednjaRazmatranaSedmica != 15) {
+            dodatak = `<td rowspan="2"></td> `;
+        }
+
+        htmlSadrzaj += `${dodatak} </tr> \n <tr> \n`;
         let prisustvo = prisustvaStudenataTrenutneSedmice[index];
 
         for (let k = 1; k <= prisustvo.predavanja; k++)
@@ -71,6 +86,7 @@ let TabelaPrisustvo = function (divRef, podaci) {
             htmlSadrzaj += `<td class="crvena"> <br> </td> \n`;            
         html += `<tr> ${htmlSadrzaj} </tr>`;
     });
+
 
     tabela.innerHTML = html;
 
