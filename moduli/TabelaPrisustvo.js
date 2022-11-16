@@ -1,16 +1,20 @@
-const sedmiceTekstualno = [0, "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV"];
-const upisanoZaglavljeSedmice = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-const prisustvaStudenataTrenutneSedmice = [];
+const validirajPodatke = (podaci) => {
+    return true;
+}
 
-let TabelaPrisustvo = function (divRef, podaci) {
-    //formula za pristup zadnjoj koloni: |rb_kolone + 2 + br_predavanja + br_vjezbi - 1|
+const KreirajTabelu = (divRef, podaci, trenutnaSedmica) => {
+    //početne vrijednosti nekih varijabli
+    divRef.innerHTML = "";    
+    const sedmiceTekstualno = [0, "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV"];
+    const upisanoZaglavljeSedmice = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+    const prisustvaStudenataTrenutneSedmice = [];
 
-    divRef.innerHTML = "";
+    if (!validirajPodatke(podaci)) {
+        divRef.innerHTML = "<em> Podaci o prisustvu nisu validni! </em>";
+        return;
+    }
 
-    //treba validirati podatke ovdje!
     const ukupnoStudenata = podaci.studenti.length;
-    //const trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica - 3;
-    const trenutnaSedmica = 1;
     let posljednjaRazmatranaSedmica = 0;
 
     const tabela = document.createElement('table');
@@ -100,7 +104,15 @@ let TabelaPrisustvo = function (divRef, podaci) {
     html += `<col style="width:${postotakSirine}%;">`;
     tabela.innerHTML = html;
     divRef.appendChild(tabela);
+}
 
+let TabelaPrisustvo = function (divRef, podaci) {
+    let trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica;
+
+    //inicijalno pokazujemo podatke za posljednju sedmicu
+    KreirajTabelu(divRef, podaci, trenutnaSedmica);    
+    KreirajTabelu(divRef, podaci, trenutnaSedmica-1);
+    
     //implementacija metoda
     let sljedecaSedmica = function () {
 
