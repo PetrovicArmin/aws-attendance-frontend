@@ -67,7 +67,8 @@ const KreirajTabelu = (divRef, podaci, trenutnaSedmica) => {
         }
 
         if (zadnjaSedmica != 15)
-            red += `<td rowspan="2"></td> \n </tr> <tr> \n`;
+            red += `<td rowspan="2"></td> \n`;
+        red += `</tr> <tr> \n`;
 
         if (prisustvoTrenutneSedmice == null) {
             for (let j = 1; j <= brPredavanja; j++)
@@ -112,7 +113,6 @@ let TabelaPrisustvo = function (divRef, podaci) {
 
     //inicijalno pokazujemo podatke za posljednju sedmicu
     KreirajTabelu(divRef, podaci, trenutnaSedmica);
-    KreirajTabelu(divRef, podaci, 1);
 
     //implementacija metoda
     let sljedecaSedmica = function () {
