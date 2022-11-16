@@ -22,6 +22,12 @@ let prisustvo = TabelaPrisustvo(div, {
 			"predavanja": 2,
 			"vjezbe": 0,
 			"index": 12345
+		},
+        {
+			"sedmica": 15,
+			"predavanja": 2,
+			"vjezbe": 0,
+			"index": 12345
 		}
 	],
 	"predmet": "Razvoj mobilnih aplikacija",

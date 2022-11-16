@@ -1,5 +1,4 @@
-const validirajPodatke = (podaci) => {
-    
+const validirajPodatke = (podaci) => {    
     return true;
 }
 
@@ -25,6 +24,11 @@ const KreirajTabelu = (divRef, podaci, trenutnaSedmica) => {
     let html = "";
     divRef.innerHTML = "";
     let tabela = document.createElement('table');
+
+    if (!validirajPodatke(podaci)) {
+        divRef.innerHTML = `<br><br><h1 style="text-align: center;"> Podaci o prisustvu nisu validni! </h1>\n`;
+        return;
+    }
 
     //popunjavanje zaglavlja tabele
     redoviSadrzaj[0] = `<th>Ime i <br> prezime</th> \n <th>Index</th> \n`;
