@@ -21,9 +21,13 @@ const validirajPodatke = (podaci) => {
     //Postoje dva ili više studenata sa istim indeksom u listi studenata
     if (postojeDuplikati(studenti.map(s => s.index)))
         return false;
-    //Postoji prisustvo za studenta koji nije u listi studenata
-    //Postoji sedmica, između dvije sedmice za koje je uneseno prisustvo bar jednom studentu, u kojoj nema unesenog prisustva. Npr. uneseno je prisustvo za sedmice 1 i 3 ali nijedan student nema prisustvo za sedmicu 2
 
+
+    //Postoji prisustvo za studenta koji nije u listi studenata
+    if (!podaci.prisustva.map(p => p.index).every(ind => podaci.studenti.map(s => s.index).includes(ind)))
+        return false;
+
+    //Postoji sedmica, između dvije sedmice za koje je uneseno prisustvo bar jednom studentu, u kojoj nema unesenog prisustva. Npr. uneseno je prisustvo za sedmice 1 i 3 ali nijedan student nema prisustvo za sedmicu 2
     
     return true;
 }

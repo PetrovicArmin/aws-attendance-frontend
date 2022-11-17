@@ -3,11 +3,11 @@ let div = document.getElementById("divSadrzaj");
 let prisustvo = TabelaPrisustvo(div, {
 	"studenti": [{
 			"ime": "Neko Nekic",
-			"index": 12346
+			"index": 12345
 		},
 		{
 			"ime": "Drugi Neko",
-			"index": 12345
+			"index": 12346
 		}
 	],
 	"prisustva": [{
