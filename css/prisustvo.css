@@ -27,6 +27,14 @@ td, th {
     background-color: lightgreen;
 }
 
+.desni_button {
+    float: right;
+}
+
+button {
+    margin-top: 30px;
+}
+
 .crvena {
     background-color: lightcoral;
 }
@@ -38,6 +46,11 @@ td, th {
 @media only screen and (max-width: 683px) {
     html {
         min-width: 685px;
+    }
+
+    .desni_button {
+        float: none;
+        margin-left: 30px;
     }
 }
 

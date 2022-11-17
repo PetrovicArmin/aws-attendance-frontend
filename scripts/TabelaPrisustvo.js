@@ -166,21 +166,35 @@ const PopuniDiv = (div, podaci, trenutnaSedmica) => {
     const vjezbeElement = document.createElement('p');
     vjezbeElement.appendChild(document.createTextNode(`Broj vježbi sedmično: ${podaci.brojVjezbiSedmicno}`));
 
+    const buttonLijevo = document.createElement('button');
+    buttonLijevo.setAttribute('type', 'button');
+    buttonLijevo.innerHTML = `<img src="../slike/left-arrow.svg" width=50px height=50px />`
+
+    const buttonDesno = document.createElement('button');
+    buttonDesno.setAttribute('type', 'button');
+    buttonDesno.setAttribute('class', "desni_button");
+    buttonDesno.innerHTML = `<img src="../slike/right-arrow.svg" width=50px height=50px/>`
+
     div.appendChild(predmetElement);
     div.appendChild(predavanjaElement);
     div.appendChild(vjezbeElement);
     div.appendChild(tabela);
+    div.appendChild(buttonLijevo);
+    div.appendChild(buttonDesno);
+
 
     return div;
 }
 
 
 let TabelaPrisustvo = function (divRef, podaci) {
+
+    //inicijalno popunjavanje referentnog div-a
     let trenutnaSedmica = 0;
     if (podaci.prisustva.length)
-        trenutnaSedmica = podaci.prisustva.sort((pr_a, pr_b) => pr_a.sedmica - pr_b.sedmica)[podaci.prisustva.length - 1].sedmica;
-
+        trenutnaSedmica = Math.max(...podaci.prisustva.map(pr => pr.sedmica));
     PopuniDiv(divRef, podaci, trenutnaSedmica);
+
 
     //implementacija metoda
     let sljedecaSedmica = function () {
