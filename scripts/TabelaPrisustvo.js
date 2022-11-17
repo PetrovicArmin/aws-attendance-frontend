@@ -1,4 +1,20 @@
 const validirajPodatke = (podaci) => {    
+    const brVjezbi = podaci.brojVjezbiSedmicno;
+    const brPredavanja = podaci.brojPredavanjaSedmicno;
+    const studenti = StrukturirajPrisustva(podaci);
+    
+    //Broj prisustva na predavanju/vježbi je veći od broja predavanja/vježbi sedmično
+    if (podaci.prisustva.some(p => (p.predavanja < 0 || p.vjezbe < 0 || p.predavanja > brPredavanja || p.vjezbe > brVjezbi)))
+        return false;
+
+    //Broj prisustva je manji od nule
+
+    //Isti student ima dva ili više unosa prisustva za istu sedmicu
+    //Postoje dva ili više studenata sa istim indeksom u listi studenata
+    //Postoji prisustvo za studenta koji nije u listi studenata
+    //Postoji sedmica, između dvije sedmice za koje je uneseno prisustvo bar jednom studentu, u kojoj nema unesenog prisustva. Npr. uneseno je prisustvo za sedmice 1 i 3 ali nijedan student nema prisustvo za sedmicu 2
+
+    
     return true;
 }
 
@@ -105,15 +121,25 @@ const KreirajTabelu = (podaci, trenutnaSedmica) => {
     return tabela;
 }
 
-const PopuniDiv = (div, tabela, predmet, predavanja, vjezbe) => {
+const PopuniDiv = (podaci, trenutnaSedmica) => {
+    div.innerHTML = "";
+
+    if (!validirajPodatke(podaci)) {
+        div.innerHTML = "Podaci o prisustvu nisu validni!";
+        return;
+    }
+
+    //kreiranje tabele na osnovu podataka
+    const tabela = KreirajTabelu(podaci, trenutnaSedmica);
+
     const predmetElement = document.createElement('p');
-    predmetElement.appendChild(document.createTextNode(`Predmet: ${predmet}`));
+    predmetElement.appendChild(document.createTextNode(`Predmet: ${podaci.predmet}`));
 
     const predavanjaElement = document.createElement('p');
-    predavanjaElement.appendChild(document.createTextNode(`Broj predavanja sedmično: ${predavanja}`));
+    predavanjaElement.appendChild(document.createTextNode(`Broj predavanja sedmično: ${podaci.brojPredavanjaSedmicno}`));
 
     const vjezbeElement = document.createElement('p');
-    vjezbeElement.appendChild(document.createTextNode(`Broj vježbi sedmično: ${vjezbe}`));
+    vjezbeElement.appendChild(document.createTextNode(`Broj vježbi sedmično: ${podaci.brojVjezbiSedmicno}`));
 
     div.appendChild(predmetElement);
     div.appendChild(predavanjaElement);
@@ -127,11 +153,7 @@ const PopuniDiv = (div, tabela, predmet, predavanja, vjezbe) => {
 let TabelaPrisustvo = function (divRef, podaci) {
     let trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica;
 
-    //kreiranje tabele na osnovu podataka
-    const tabela = KreirajTabelu(podaci, trenutnaSedmica);
-
-    //popunjavanje divRef-a sa odgovarajućim sadržajem
-    PopuniDiv(divRef, tabela, podaci.predmet, podaci.brojPredavanjaSedmicno, podaci.brojVjezbiSedmicno);
+    PopuniDiv(podaci, trenutnaSedmica);
 
     //implementacija metoda
     let sljedecaSedmica = function () {
