@@ -4,10 +4,13 @@ const validirajPodatke = (podaci) => {
     const studenti = StrukturirajPrisustva(podaci);
     
     //Broj prisustva na predavanju/vježbi je veći od broja predavanja/vježbi sedmično
+    //Broj prisustva je manji od nule
+    if (brVjezbi < 0 || brPredavanja < 0)
+        return false;
     if (podaci.prisustva.some(p => (p.predavanja < 0 || p.vjezbe < 0 || p.predavanja > brPredavanja || p.vjezbe > brVjezbi)))
         return false;
 
-    //Broj prisustva je manji od nule
+
 
     //Isti student ima dva ili više unosa prisustva za istu sedmicu
     //Postoje dva ili više studenata sa istim indeksom u listi studenata
