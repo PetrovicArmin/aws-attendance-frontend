@@ -57,7 +57,8 @@ const KreirajTabelu = (podaci, trenutnaSedmica) => {
     const brVjezbi = podaci.brojVjezbiSedmicno;
     const brPredavanja = podaci.brojPredavanjaSedmicno;
     const studenti = StrukturirajPrisustva(podaci);
-    const zadnjaSedmica = Math.max(...studenti.map(stud => Math.max(...stud.prisustva.map(pris => pris.sedmica))));
+
+    const zadnjaSedmica = (trenutnaSedmica) ? Math.max(...studenti.map(stud => Math.max(...stud.prisustva.map(pris => pris.sedmica)))) : 0;
     let redoviSadrzaj = [''];
     let html = "";
     let tabela = document.createElement('table');
@@ -106,20 +107,22 @@ const KreirajTabelu = (podaci, trenutnaSedmica) => {
             red += `<td rowspan="2"></td> \n`;
         red += `</tr> <tr> \n`;
 
-        if (prisustvoTrenutneSedmice == null) {
-            for (let j = 1; j <= brPredavanja; j++)
-                red += `<td> <br> </td> \n`;
-            for (let j = 1; j <= brVjezbi; j++)
-                red += `<td> <br> </td> \n`;
-        } else {
-            for (let k = 1; k <= prisustvoTrenutneSedmice.predavanja; k++)
-                red += `<td class="zelena"> <br> </td> \n`;
-            for (let k = prisustvoTrenutneSedmice.predavanja + 1; k <= brPredavanja; k++)
-                red += `<td class="crvena"> <br> </td> \n`;
-            for (let k = 1; k <= prisustvoTrenutneSedmice.vjezbe; k++)
-                red += `<td class="zelena"> <br> </td> \n`;
-            for (let k = prisustvoTrenutneSedmice.vjezbe + 1; k <= brVjezbi; k++)
-                red += `<td class="crvena"> <br> </td> \n`;            
+        if (zadnjaSedmica) {
+            if (prisustvoTrenutneSedmice == null) {
+                for (let j = 1; j <= brPredavanja; j++)
+                    red += `<td> <br> </td> \n`;
+                for (let j = 1; j <= brVjezbi; j++)
+                    red += `<td> <br> </td> \n`;
+            } else {
+                for (let k = 1; k <= prisustvoTrenutneSedmice.predavanja; k++)
+                    red += `<td class="zelena"> <br> </td> \n`;
+                for (let k = prisustvoTrenutneSedmice.predavanja + 1; k <= brPredavanja; k++)
+                    red += `<td class="crvena"> <br> </td> \n`;
+                for (let k = 1; k <= prisustvoTrenutneSedmice.vjezbe; k++)
+                    red += `<td class="zelena"> <br> </td> \n`;
+                for (let k = prisustvoTrenutneSedmice.vjezbe + 1; k <= brVjezbi; k++)
+                    red += `<td class="crvena"> <br> </td> \n`;            
+            }
         }
 
         redoviSadrzaj.push(red);
@@ -129,7 +132,7 @@ const KreirajTabelu = (podaci, trenutnaSedmica) => {
     redoviSadrzaj.forEach(red => html += `<tr> ${red} </tr> \n`);
 
     //dodavanje odgovarajućeg broja col tagova
-    for (let k = 1; k < 2 + zadnjaSedmica + brPredavanja + brVjezbi; k++)
+    for (let k = 1; k < 2 + (zadnjaSedmica ? zadnjaSedmica + brPredavanja + brVjezbi : 1); k++)
         html += "<col>\n";
 
     let preostaloKolona = 15 - zadnjaSedmica;
@@ -143,7 +146,7 @@ const KreirajTabelu = (podaci, trenutnaSedmica) => {
     return tabela;
 }
 
-const PopuniDiv = (podaci, trenutnaSedmica) => {
+const PopuniDiv = (div, podaci, trenutnaSedmica) => {
     div.innerHTML = "";
 
     if (!validirajPodatke(podaci)) {
@@ -173,9 +176,11 @@ const PopuniDiv = (podaci, trenutnaSedmica) => {
 
 
 let TabelaPrisustvo = function (divRef, podaci) {
-    let trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica;
+    let trenutnaSedmica = 0;
+    if (podaci.prisustva.length)
+        trenutnaSedmica = podaci.prisustva.sort((pr_a, pr_b) => pr_a.sedmica - pr_b.sedmica)[podaci.prisustva.length - 1].sedmica;
 
-    PopuniDiv(podaci, trenutnaSedmica);
+    PopuniDiv(divRef, podaci, trenutnaSedmica);
 
     //implementacija metoda
     let sljedecaSedmica = function () {
