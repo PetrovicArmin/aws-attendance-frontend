@@ -17,7 +17,10 @@ const validirajPodatke = (podaci) => {
     //Isti student ima dva ili više unosa prisustva za istu sedmicu
     if (studenti.some(s => postojeDuplikati(s.prisustva.map(p => p.sedmica))))
         return false;
+
     //Postoje dva ili više studenata sa istim indeksom u listi studenata
+    if (postojeDuplikati(studenti.map(s => s.index)))
+        return false;
     //Postoji prisustvo za studenta koji nije u listi studenata
     //Postoji sedmica, između dvije sedmice za koje je uneseno prisustvo bar jednom studentu, u kojoj nema unesenog prisustva. Npr. uneseno je prisustvo za sedmice 1 i 3 ali nijedan student nema prisustvo za sedmicu 2
 
