@@ -13,7 +13,7 @@ const StrukturirajPrisustva = (podaci) => {
     return nizStudenata;
 }
 
-const KreirajTabelu = (divRef, podaci, trenutnaSedmica) => {
+const KreirajTabelu = (podaci, trenutnaSedmica) => {
     //konstante potrebne za lakši rad
     const sedmiceTekstualno = [0, "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV"];
     const brVjezbi = podaci.brojVjezbiSedmicno;
@@ -22,13 +22,7 @@ const KreirajTabelu = (divRef, podaci, trenutnaSedmica) => {
     const zadnjaSedmica = Math.max(...studenti.map(stud => Math.max(...stud.prisustva.map(pris => pris.sedmica))));
     let redoviSadrzaj = [''];
     let html = "";
-    divRef.innerHTML = "";
     let tabela = document.createElement('table');
-
-    if (!validirajPodatke(podaci)) {
-        divRef.innerHTML = `<br><br><h1 style="text-align: center;"> Podaci o prisustvu nisu validni! </h1>\n`;
-        return;
-    }
 
     //popunjavanje zaglavlja tabele
     redoviSadrzaj[0] = `<th>Ime i <br> prezime</th> \n <th>Index</th> \n`;
@@ -108,15 +102,36 @@ const KreirajTabelu = (divRef, podaci, trenutnaSedmica) => {
 
     html += `<col style="width:${postotakSirine}%;">`;
     tabela.innerHTML = html;
-    divRef.appendChild(tabela);
+    return tabela;
+}
+
+const PopuniDiv = (div, tabela, predmet, predavanja, vjezbe) => {
+    const predmetElement = document.createElement('p');
+    predmetElement.appendChild(document.createTextNode(`Predmet: ${predmet}`));
+
+    const predavanjaElement = document.createElement('p');
+    predavanjaElement.appendChild(document.createTextNode(`Broj predavanja sedmično: ${predavanja}`));
+
+    const vjezbeElement = document.createElement('p');
+    vjezbeElement.appendChild(document.createTextNode(`Broj vježbi sedmično: ${vjezbe}`));
+
+    div.appendChild(predmetElement);
+    div.appendChild(predavanjaElement);
+    div.appendChild(vjezbeElement);
+    div.appendChild(tabela);
+
+    return div;
 }
 
 
 let TabelaPrisustvo = function (divRef, podaci) {
     let trenutnaSedmica = podaci.prisustva[podaci.prisustva.length - 1].sedmica;
 
-    //inicijalno pokazujemo podatke za posljednju sedmicu
-    KreirajTabelu(divRef, podaci, trenutnaSedmica);
+    //kreiranje tabele na osnovu podataka
+    const tabela = KreirajTabelu(podaci, trenutnaSedmica);
+
+    //popunjavanje divRef-a sa odgovarajućim sadržajem
+    PopuniDiv(divRef, tabela, podaci.predmet, podaci.brojPredavanjaSedmicno, podaci.brojVjezbiSedmicno);
 
     //implementacija metoda
     let sljedecaSedmica = function () {
