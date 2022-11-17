@@ -91,7 +91,7 @@ const KreirajTabelu = (podaci, trenutnaSedmica) => {
             if (i != trenutnaSedmica) {
                 let tekst = "";
                 if (prisustvo)
-                    tekst = `${((prisustvo.predavanja + prisustvo.vjezbe)/(1.0*(brVjezbi + brPredavanja)))*100}%`;
+                    tekst = `${Math.round(((prisustvo.predavanja + prisustvo.vjezbe)/(1.0*(brVjezbi + brPredavanja)))*100)}%`;
                 red += `<td rowspan="2">${tekst}</td> \n`;    
             } else {
                 prisustvoTrenutneSedmice = prisustvo;

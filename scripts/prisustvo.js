@@ -18,13 +18,13 @@ let prisustvo = TabelaPrisustvo(div, {
 		},
 		
 		{
-			"sedmica": 2,
+			"sedmica": 1,
 			"predavanja": 2,
 			"vjezbe": 2,
 			"index": 12345
 		},
         {
-			"sedmica": 1,
+			"sedmica": 3,
 			"predavanja": 2,
 			"vjezbe": 2,
 			"index": 12345
