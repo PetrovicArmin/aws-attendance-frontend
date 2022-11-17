@@ -166,14 +166,6 @@ const PopuniDiv = (div, podaci, trenutnaSedmica) => {
     const vjezbeElement = document.createElement('p');
     vjezbeElement.appendChild(document.createTextNode(`Broj vježbi sedmično: ${podaci.brojVjezbiSedmicno}`));
 
-    const buttonLijevo = document.createElement('button');
-    buttonLijevo.setAttribute('type', 'button');
-    buttonLijevo.innerHTML = `<img src="../slike/left-arrow.svg" width=50px height=50px />`
-
-    const buttonDesno = document.createElement('button');
-    buttonDesno.setAttribute('type', 'button');
-    buttonDesno.setAttribute('class', "desni_button");
-    buttonDesno.innerHTML = `<img src="../slike/right-arrow.svg" width=50px height=50px/>`
 
     div.appendChild(predmetElement);
     div.appendChild(predavanjaElement);
@@ -182,28 +174,48 @@ const PopuniDiv = (div, podaci, trenutnaSedmica) => {
     div.appendChild(buttonLijevo);
     div.appendChild(buttonDesno);
 
-
     return div;
 }
 
 
-let TabelaPrisustvo = function (divRef, podaci) {
+const buttonLijevo = document.createElement('button');
+buttonLijevo.setAttribute('type', 'button');
+buttonLijevo.innerHTML = `<img src="../slike/left-arrow.svg" width=50px height=50px />`
 
+const buttonDesno = document.createElement('button');
+buttonDesno.setAttribute('type', 'button');
+buttonDesno.setAttribute('class', "desni_button");
+buttonDesno.innerHTML = `<img src="../slike/right-arrow.svg" width=50px height=50px/>`
+
+
+let TabelaPrisustvo = function (divRef, podaci) {
     //inicijalno popunjavanje referentnog div-a
     let trenutnaSedmica = 0;
+    
     if (podaci.prisustva.length)
         trenutnaSedmica = Math.max(...podaci.prisustva.map(pr => pr.sedmica));
+    
+    const posljednjaSaPrisustvom = trenutnaSedmica;
+    
     PopuniDiv(divRef, podaci, trenutnaSedmica);
-
-
+    
     //implementacija metoda
-    let sljedecaSedmica = function () {
-
-    }
-
     let prethodnaSedmica = function () {
-
+        if (trenutnaSedmica == 1 || trenutnaSedmica == 0)
+            return;
+        trenutnaSedmica--;    
+        PopuniDiv(divRef, podaci, trenutnaSedmica);        
     }
+
+    let sljedecaSedmica = function () {
+        if (trenutnaSedmica >= posljednjaSaPrisustvom)
+            return;
+        trenutnaSedmica++;
+        PopuniDiv(divRef, podaci, trenutnaSedmica);
+    }
+
+    buttonLijevo.addEventListener('click', prethodnaSedmica);
+    buttonDesno.addEventListener('click', sljedecaSedmica);
 
     return {
         sljedecaSedmica: sljedecaSedmica,
