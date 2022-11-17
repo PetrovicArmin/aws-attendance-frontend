@@ -27,7 +27,15 @@ const validirajPodatke = (podaci) => {
     if (!podaci.prisustva.map(p => p.index).every(ind => podaci.studenti.map(s => s.index).includes(ind)))
         return false;
 
-    //Postoji sedmica, između dvije sedmice za koje je uneseno prisustvo bar jednom studentu, u kojoj nema unesenog prisustva. Npr. uneseno je prisustvo za sedmice 1 i 3 ali nijedan student nema prisustvo za sedmicu 2
+    //Postoji sedmica, između dvije sedmice za koje je uneseno prisustvo bar jednom studentu, u kojoj nema unesenog prisustva. 
+    let sedmice = podaci.prisustva.map(p => p.sedmica).filter((item, i, ar) => ar.indexOf(item) === i).sort((a,b) => a - b);
+
+    //ovaj if ovisi od toga da li moramo kretati od prve sedmice!
+    if (sedmice.length > 0 && sedmice[0] != 1)
+        return false;
+
+    if (Math.max(...sedmice.slice(1).map((v, i) => v - sedmice[i])) > 1)
+        return false;
     
     return true;
 }
