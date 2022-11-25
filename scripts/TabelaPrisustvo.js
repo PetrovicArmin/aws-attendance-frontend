@@ -173,15 +173,14 @@ const PopuniDiv = (div, podaci, trenutnaSedmica) => {
     return div;
 }
 
-
 const buttonLijevo = document.createElement('button');
 buttonLijevo.setAttribute('type', 'button');
-buttonLijevo.innerHTML = `<img src="../slike/left-arrow.svg" width=50px height=50px />`
+buttonLijevo.innerHTML = `<i class="fa fa-solid fa-arrow-left"></i>`
 
 const buttonDesno = document.createElement('button');
 buttonDesno.setAttribute('type', 'button');
 buttonDesno.setAttribute('class', "desni_button");
-buttonDesno.innerHTML = `<img src="../slike/right-arrow.svg" width=50px height=50px/>`
+buttonDesno.innerHTML = `<i class="fa fa-solid fa-arrow-right"></i>`
 
 
 let TabelaPrisustvo = function (divRef, podaci) {

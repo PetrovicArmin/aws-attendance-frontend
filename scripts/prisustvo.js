@@ -35,11 +35,47 @@ let prisustvo = TabelaPrisustvo(div, {
 			"predavanja": 3,
 			"vjezbe": 2,
 			"index": 23441
+		},
+        {
+			"sedmica": 1,
+			"predavanja": 3,
+			"vjezbe": 2,
+			"index": 60
+		},
+        {
+			"sedmica": 1,
+			"predavanja": 3,
+			"vjezbe": 2,
+			"index": 23441
+		},
+        {
+			"sedmica": 5,
+			"predavanja": 3,
+			"vjezbe": 2,
+			"index": 60
+		},
+        {
+			"sedmica": 5,
+			"predavanja": 3,
+			"vjezbe": 2,
+			"index": 12345
+		},
+        {
+			"sedmica": 2,
+			"predavanja": 3,
+			"vjezbe": 2,
+			"index": 60
+		},
+        {
+			"sedmica": 2,
+			"predavanja": 3,
+			"vjezbe": 2,
+			"index": 23441
 		}
 	],
 	"predmet": "P1",
-	"brojPredavanjaSedmicno": 3,
-	"brojVjezbiSedmicno": 2
+	"brojPredavanjaSedmicno": 6,
+	"brojVjezbiSedmicno": 6
 }
 );
 
