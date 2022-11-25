@@ -175,12 +175,12 @@ const PopuniDiv = (div, podaci, trenutnaSedmica) => {
 
 const buttonLijevo = document.createElement('button');
 buttonLijevo.setAttribute('type', 'button');
-buttonLijevo.innerHTML = `<i class="fa fa-solid fa-arrow-left fa-4x"></i>`
+buttonLijevo.innerHTML = `<i class="fa fa-solid fa-arrow-left fa-4x"></i>`;
 
 const buttonDesno = document.createElement('button');
 buttonDesno.setAttribute('type', 'button');
 buttonDesno.setAttribute('class', "desni_button");
-buttonDesno.innerHTML = `<i class="fa fa-solid fa-arrow-right fa-4x"></i>`
+buttonDesno.innerHTML = `<i class="fa fa-solid fa-arrow-right fa-4x"></i>`;
 
 
 let TabelaPrisustvo = function (divRef, podaci) {
