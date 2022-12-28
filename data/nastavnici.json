@@ -1,0 +1,22 @@
+[
+    {
+        "nastavnik": {
+            "username": "USERNAME",
+            "password_hash": "PASSWORDHASH"
+        },
+        "predmeti": [
+            "PREDMET1",
+            "PREDMET2",
+            "PREDMET3"
+        ]
+    },
+    {
+        "nastavnik": {
+            "username": "USERNAME2",
+            "password_hash": "PASSWORDHASH2"
+        },
+        "predmeti": [
+            "PREDMET1"
+        ]
+    }
+]
