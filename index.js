@@ -19,6 +19,10 @@ app.get('/prisustvo', (req, res) => {
     res.sendFile("html/prisustvo.html", { root: public_folder });
 });
 
+app.get('/prijava', (req, res) => {
+    res.sendFile("html/prijava.html", { root: public_folder });
+});
+
 app.listen(3000, () => {
   console.log('Server listening on port 3000');
 });
