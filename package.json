@@ -1,0 +1,23 @@
+{
+  "name": "wt-projekat",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/arminpetrovic/wt22p18916.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://bitbucket.org/arminpetrovic/wt22p18916/issues"
+  },
+  "homepage": "https://bitbucket.org/arminpetrovic/wt22p18916#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
