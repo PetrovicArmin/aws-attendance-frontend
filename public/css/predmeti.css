@@ -1,0 +1,20 @@
+li:hover {
+    background-color: aliceblue;
+}
+
+html {
+    min-width: 500px;
+}
+
+body {
+    min-width: 550px;
+}
+
+.no_padding {
+    padding: 0px;
+}
+
+.logout:hover {
+    color: lightskyblue;
+    background-color: lightgrey;
+}

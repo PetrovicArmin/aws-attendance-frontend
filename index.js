@@ -34,6 +34,9 @@ app.get('/prijava', (req, res) => {
     res.sendFile("html/prijava.html", { root: public_folder });
 });
 
+app.get('/predmeti', (req, res) => {
+    res.sendFile("html/predmeti.html", { root: public_folder });
+});
 
 app.post('/login', (req, res) => {
     fs.readFile('data/nastavnici.json', (error, data) => {
