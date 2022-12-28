@@ -13,12 +13,12 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Greeting</a>
+    <a class="navbar-brand" href="#">Greetings,</a>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item logout">
-          <a class="nav-link" href="#">Logout</a>
+            <a class="nav-link" onclick="PoziviAjax.postLogout((err, data) =>{if(err){console.log(err); return;} window.location.replace('http://localhost:3000/prijava');})">Logout</a>
         </li>
-      </ul>
+    </ul>
   </nav>
   <div class="container-fluid">
     <div class="row">
@@ -28,7 +28,7 @@
             <a class="nav-link" href="#">Matematika u cjelobrojnom programiranju</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Link 2</a>
+            <a class="nav-link" href="#">Algoritmi i strukture podataka</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Link 3</a>
@@ -47,5 +47,7 @@
       </div>
     </div>
   </div>
+
+  <script src="scripts/poziviAjax.js"></script>
 </body>
 </html>

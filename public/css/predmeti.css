@@ -10,6 +10,10 @@ body {
     min-width: 550px;
 }
 
+a:hover {
+    cursor:pointer;
+}
+
 .no_padding {
     padding: 0px;
 }

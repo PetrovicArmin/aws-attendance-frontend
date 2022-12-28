@@ -21,7 +21,12 @@ const PoziviAjax = (()=>{
           .catch(err => fnCallback(err.message, null));
     }
     function impl_postLogout(fnCallback){
-
+        fetch("http://localhost:3000/logout", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            } 
+        }).then(res => res.json()).then(value => fnCallback(null, value)).catch(err => fnCallback(err.message, null));        
     }
     //prisustvo ima oblik {sedmica:N,predavanja:P,vjezbe:V}
     function impl_postPrisustvo(naziv,index,prisustvo,fnCallback){

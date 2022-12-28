@@ -31,10 +31,18 @@ app.get('/prisustvo', (req, res) => {
 });
 
 app.get('/prijava', (req, res) => {
+    if (req.session.username) {
+        res.redirect('predmeti');
+        return;
+    }
     res.sendFile("html/prijava.html", { root: public_folder });
 });
 
 app.get('/predmeti', (req, res) => {
+    if (!req.session.username) {
+        res.redirect('prijava');
+        return;
+    }
     res.sendFile("html/predmeti.html", { root: public_folder });
 });
 
@@ -71,6 +79,16 @@ app.post('/login', (req, res) => {
       });
 });
 
+app.post("/logout", (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            res.sendStatus(404).json({'poruka': 'greška prilikom brisanja sesije!'});
+            return;
+        }
+        res.json({'poruka': 'uspješno obrisana sesija!'});
+    });
+});
+
 app.listen(3000, () => {
-  console.log('Server listening on port 3000');
+    console.log('Server listening on port 3000');
 });
