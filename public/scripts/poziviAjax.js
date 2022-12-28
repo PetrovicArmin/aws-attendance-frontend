@@ -1,5 +1,4 @@
 const PoziviAjax = (()=>{
-
     //fnCallback u svim metodama se poziva kada stigne odgovor sa servera putem Ajax-a
     // svaki callback kao parametre ima error i data, error je null ako je status 200 i data je tijelo odgovora
     // ako postoji greška poruka se prosljeđuje u error parametar callback-a, a data je tada null
