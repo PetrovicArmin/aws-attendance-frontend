@@ -5,8 +5,20 @@ const PoziviAjax = (()=>{
     function impl_getPredmet(naziv,fnCallback){
 
     }
-    function impl_postLogin(username,password,fnCallback){
 
+    function impl_postLogin(username,password,fnCallback){
+        fetch("http://localhost:3000/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username,
+                password
+            })
+        }).then(res => res.json())
+          .then(value => fnCallback(null, value))
+          .catch(err => fnCallback(err.message, null));
     }
     function impl_postLogout(fnCallback){
 

@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
+import fs from 'fs';
 
 
 const app = express();
@@ -24,6 +25,23 @@ app.get('/prisustvo', (req, res) => {
 
 app.get('/prijava', (req, res) => {
     res.sendFile("html/prijava.html", { root: public_folder });
+});
+
+
+app.post('/login', (req, res) => {
+    fs.readFile('data/nastavnici.json', (error, data) => {
+        if (error) {
+          console.error(error);
+          res.json({'poruka': 'Neuspješna prijava'});
+          return;
+        }
+      
+        const nastavniciArray = JSON.parse(data);
+        //TODO: provjeriti da li postoji nastavnik koji se prijavljuje
+        //TODO: poslati u ovisnosti od toga poruku o prijavi
+        //TODO: zapisati u sesiju (da ostane zapisan nastavnik) nastavnika - vidjeti kasnije kako!
+        res.json(nastavniciArray);
+      });
 });
 
 app.listen(3000, () => {
