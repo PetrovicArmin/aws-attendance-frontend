@@ -24,12 +24,13 @@
             <label for="password">Lozinka</label>
             <input type="password" class="form-control" id="password" placeholder="Enter password">
           </div>
-          <button type="button" onclick="PoziviAjax.postLogin(document.getElementById('username'),document.getElementById('password'),(err, data) => {console.log(err); console.log(data)})" class="btn btn-primary btn-block">Prijava</button>
+          <button type="button" onclick="PoziviAjax.postLogin(document.getElementById('username').value,document.getElementById('password').value, fnCallback)" class="btn btn-primary btn-block">Prijava</button>
         </form>
       </div>
     </div>
   </div>
 
+  <script src="scripts/prijavaHelper.js"></script>
   <script src="scripts/poziviAjax.js"></script>
 </body>
 </html>

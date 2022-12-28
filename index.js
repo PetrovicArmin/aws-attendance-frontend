@@ -3,7 +3,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
 import fs from 'fs';
-
+import bcrypt from 'bcrypt';
+import session from 'express-session';
 
 const app = express();
 
@@ -14,6 +15,12 @@ const public_folder = path.join(__dirname, "public");
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(session({
+    secret: 'tajni-kljuc',
+    resave: false,
+    saveUninitialized: true
+}));
+
 
 app.get('/predmet', (req, res) => {
     res.sendFile("html/predmet.html", { root: public_folder });
@@ -31,16 +38,33 @@ app.get('/prijava', (req, res) => {
 app.post('/login', (req, res) => {
     fs.readFile('data/nastavnici.json', (error, data) => {
         if (error) {
-          console.error(error);
           res.json({'poruka': 'Neuspješna prijava'});
           return;
         }
       
-        const nastavniciArray = JSON.parse(data);
-        //TODO: provjeriti da li postoji nastavnik koji se prijavljuje
-        //TODO: poslati u ovisnosti od toga poruku o prijavi
-        //TODO: zapisati u sesiju (da ostane zapisan nastavnik) nastavnika - vidjeti kasnije kako!
-        res.json(nastavniciArray);
+        let nastavniciArray = JSON.parse(data);
+
+        nastavniciArray = nastavniciArray.filter(obj => obj.nastavnik.username == req.body.username);
+
+        if (nastavniciArray.length != 1) {
+            res.json({'poruka': 'Neuspješna prijava'});
+            return;
+        }
+
+        const zeljeni_objekat = nastavniciArray[0];
+
+        bcrypt.compare(req.body.password, zeljeni_objekat.nastavnik.password_hash, (err, ista) => {
+            
+            if (err || !ista) {
+                res.json({'poruka': 'Neuspješna prijava'});
+                return;
+            }
+            
+            req.session.username = req.body.username;
+            req.session.listaPredmeta = zeljeni_objekat.predmeti;
+            
+            res.json({'poruka': 'Uspješna prijava'});
+        });
       });
 });
 
