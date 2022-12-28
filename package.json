@@ -18,6 +18,7 @@
   },
   "homepage": "https://bitbucket.org/arminpetrovic/wt22p18916#readme",
   "dependencies": {
+    "bcrypt": "^5.1.0",
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
     "fs": "^0.0.1-security"
