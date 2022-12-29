@@ -58,7 +58,11 @@ app.get('/predmeti', (req, res) => {
     });
 });
 
+//TODO: implementirati da se vraćaju prava prisustva u ovisnosti od naziva predmeta!
 app.get('/predmet/:naziv', (req, res) => {
+    fs.readFile('data/prisustva.json', (error, data) => {
+        
+    });
     console.log("Ime predmeta je : " + req.params.naziv);
     res.json({predmeti: req.params.naziv});
 });
