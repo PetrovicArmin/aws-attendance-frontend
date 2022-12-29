@@ -209,11 +209,11 @@ const KreirajTabeluClickable = (podaci, trenutnaSedmica) => {
                 for (let k = 1; k <= prisustvoTrenutneSedmice.predavanja; k++)
                     red += `<td class="zelena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe}, 'predavanja': ${p.predavanja-1}}, prisustvaCallback)"> <br> </td> \n`;
                 for (let k = prisustvoTrenutneSedmice.predavanja + 1; k <= brPredavanja; k++)
-                    red += `<td class="crvena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe}, 'predavanja': ${p.predavanja+1}}, prisustvaCallback)> <br> </td> \n`;
+                    red += `<td class="crvena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe}, 'predavanja': ${p.predavanja+1}}, prisustvaCallback)"> <br> </td> \n`;
                 for (let k = 1; k <= prisustvoTrenutneSedmice.vjezbe; k++)
-                    red += `<td class="zelena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe-1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)> <br> </td> \n`;
+                    red += `<td class="zelena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe-1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)"> <br> </td> \n`;
                 for (let k = prisustvoTrenutneSedmice.vjezbe + 1; k <= brVjezbi; k++)
-                    red += `<td class="crvena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe+1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)> <br> </td> \n`;            
+                    red += `<td class="crvena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe+1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)"> <br> </td> \n`;            
             }
         }
 
@@ -347,14 +347,16 @@ const PopuniDivClickable = (div, podaci, trenutnaSedmica) => {
 }
 
 
-let TabelaPrisustvoClickable = (divRef, podaci) => {
+let TabelaPrisustvoClickable = (divRef, podaci, trenutnaSedmica=0) => {
     //inicijalno popunjavanje referentnog div-a
-    let trenutnaSedmica = 0;
-    
+    let posljednjaSaPrisustvom = 0;
+
     if (podaci.prisustva.length)
-        trenutnaSedmica = Math.max(...podaci.prisustva.map(pr => pr.sedmica));
+        posljednjaSaPrisustvom = Math.max(...podaci.prisustva.map(pr => pr.sedmica));
+
+    if (trenutnaSedmica == 0)
+        trenutnaSedmica = posljednjaSaPrisustvom;
     
-    const posljednjaSaPrisustvom = trenutnaSedmica;
     
     PopuniDivClickable(divRef, podaci, trenutnaSedmica);
     

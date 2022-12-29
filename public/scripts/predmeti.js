@@ -41,8 +41,6 @@ const callbackPredmet = (err, data) => {
         console.log(data.poruka)
         return;
     }
-    
-    //iscrtavanje podataka na ekran!
     TabelaPrisustvoClickable(document.getElementById('divSadrzaj'), data.prisustvo);
 }
 
@@ -52,5 +50,9 @@ const prisustvaCallback = (err, data) => {
         return;
     }   
 
-    console.log(data.prisustvo);
+    if (data.poruka) {
+        console.log(data.poruka);
+        return;
+    }
+    TabelaPrisustvoClickable(document.getElementById('divSadrzaj'), data.prisustvo, data.sedmica);
 }

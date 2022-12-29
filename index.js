@@ -79,6 +79,38 @@ app.get('/predmet/:naziv', (req, res) => {
 });
 
 
+app.post('/prisustvo/predmet/:naziv/student/:index', (req, res) => {
+    fs.readFile('data/prisustva.json', (error, data) => {
+        if (error) {
+            res.json({'poruka': 'Postoje neki errori!'});
+            return;
+        }
+
+        let prisustva = JSON.parse(data);
+        const objekat_prisustvo = prisustva.find((obj) => obj.predmet == req.params.naziv);
+        
+        if (!objekat_prisustvo) {
+            res.json({'poruka': 'Ne postoji promatrani predmet!'});
+            return;
+        }
+
+        let zapis = objekat_prisustvo.prisustva.find(element => element.sedmica == req.body.sedmica && element.index == req.params.index);
+        zapis.predavanja = req.body.predavanja;
+        zapis.vjezbe = req.body.vjezbe;
+
+        console.log("Novi zapis: ");
+        console.log(zapis);
+
+        fs.writeFile('data/prisustva.json', JSON.stringify(prisustva), (err) => {
+            if (err) {
+                res.json({'poruka': "Greška prilikom modifikovanja prisustava na disku!"});
+                return;
+            }
+
+            res.json({'prisustvo': objekat_prisustvo, 'sedmica': req.body.sedmica});
+        });
+    });
+});
 
 app.post('/login', (req, res) => {
     fs.readFile('data/nastavnici.json', (error, data) => {
