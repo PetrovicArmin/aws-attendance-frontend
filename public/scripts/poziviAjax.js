@@ -3,7 +3,10 @@ const PoziviAjax = (()=>{
     // svaki callback kao parametre ima error i data, error je null ako je status 200 i data je tijelo odgovora
     // ako postoji greška poruka se prosljeđuje u error parametar callback-a, a data je tada null
     function impl_getPredmet(naziv,fnCallback){
-
+        fetch(`http://localhost:3000/predmet/${naziv}`, { method: "GET", headers: { "Content-Type": "application/json" } })
+        .then(res => res.json())
+        .then(value => fnCallback(null, value))
+        .catch(err => fnCallback(err.message, null));
     }
 
     // vraća listu predmeta za loginovanog nastavnika ili grešku da nastavnik nije loginovan

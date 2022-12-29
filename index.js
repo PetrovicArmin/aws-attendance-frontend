@@ -58,6 +58,13 @@ app.get('/predmeti', (req, res) => {
     });
 });
 
+app.get('/predmet/:naziv', (req, res) => {
+    console.log("Ime predmeta je : " + req.params.naziv);
+    res.json({predmeti: req.params.naziv});
+});
+
+
+
 app.post('/login', (req, res) => {
     fs.readFile('data/nastavnici.json', (error, data) => {
         if (error) {

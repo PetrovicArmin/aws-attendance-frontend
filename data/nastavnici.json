@@ -5,7 +5,7 @@
             "password_hash": "$2b$10$bUTsm3k/AUKFLGcGnd5ldeUBabAH5RyQ7f3WwuQihr.l25O3f.8lq"
         },
         "predmeti": [
-            "PREDMET1",
+            "PREDMET  1",
             "PREDMET2",
             "PREDMET3"
         ]
@@ -16,7 +16,7 @@
             "password_hash": "$2b$10$jlO9.ZlbdAlax/4sylu9nuq/RKCmqLpaTFQeoeo1YeUBv02X39Ya2"
         },
         "predmeti": [
-            "PREDMET1"
+            "PREDMET 1"
         ]
     }
 ]
