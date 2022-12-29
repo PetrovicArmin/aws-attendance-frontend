@@ -13,7 +13,7 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Greetings,</a>
+    <a id="username" class="navbar-brand" href="#">Greetings,</a>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item logout">
             <a class="nav-link" href="#" onclick="PoziviAjax.postLogout((err, data) =>{if(err){console.log(err); return;} window.location.replace('http://localhost:3000/prijava');})">Logout</a>
@@ -23,7 +23,7 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-2 bg-light no_padding min_width">
-        <ul class="nav flex-column">
+        <ul id="predmeti" class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link" href="#">Matematika u cjelobrojnom programiranju</a>
           </li>
@@ -49,5 +49,6 @@
   </div>
 
   <script src="scripts/poziviAjax.js"></script>
+  <script src="scripts/predmeti.js"></script>
 </body>
 </html>

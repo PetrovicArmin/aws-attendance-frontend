@@ -5,7 +5,7 @@ const fnCallback = (err, data) => {
     }
 
     if (data.poruka == 'Uspješna prijava') {
-        window.location.replace("http://localhost:3000/predmeti");
+        window.location.replace("http://localhost:3000/predmeti.html");
         return;
     } 
     document.getElementById('upozorenje').hidden = false;

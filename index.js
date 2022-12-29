@@ -22,28 +22,40 @@ app.use(session({
 }));
 
 
-app.get('/predmet', (req, res) => {
+app.get('/predmet.html', (req, res) => {
     res.sendFile("html/predmet.html", { root: public_folder });
 });
 
-app.get('/prisustvo', (req, res) => {
+app.get('/prisustvo.html', (req, res) => {
     res.sendFile("html/prisustvo.html", { root: public_folder });
 });
 
-app.get('/prijava', (req, res) => {
+app.get('/prijava.html', (req, res) => {
     if (req.session.username) {
-        res.redirect('predmeti');
+        res.redirect('predmeti.html');
         return;
     }
     res.sendFile("html/prijava.html", { root: public_folder });
 });
 
-app.get('/predmeti', (req, res) => {
+app.get('/predmeti.html', (req, res) => {
     if (!req.session.username) {
-        res.redirect('prijava');
+        res.redirect('prijava.html');
         return;
     }
     res.sendFile("html/predmeti.html", { root: public_folder });
+});
+
+app.get('/predmeti', (req, res) => {
+    if (!req.session.username) {
+        res.json({ greska: 'Nastavnik nije loginovan' });
+        return;
+    }
+
+    res.json({
+        username: req.session.username,
+        predmeti: req.session.listaPredmeta
+    });
 });
 
 app.post('/login', (req, res) => {
