@@ -8,6 +8,5 @@ const fnCallback = (err, data) => {
         window.location.replace("http://localhost:3000/predmeti");
         return;
     } 
-
-    console.log("Prijava nije bila uspješna (postoje greške)!");
+    document.getElementById('upozorenje').hidden = false;
 }
