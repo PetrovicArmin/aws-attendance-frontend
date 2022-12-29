@@ -122,7 +122,7 @@
                 "index": 53545
             }				
         ],
-        "predmet": "P1",
+        "predmet": "PREDMET  1",
         "brojPredavanjaSedmicno": 3,
         "brojVjezbiSedmicno": 2
     },
@@ -249,7 +249,7 @@
                 "index": 53545
             }				
         ],
-        "predmet": "P2",
+        "predmet": "PREDMET2",
         "brojPredavanjaSedmicno": 3,
         "brojVjezbiSedmicno": 2
     },
@@ -376,7 +376,7 @@
                 "index": 53545
             }				
         ],
-        "predmet": "P3",
+        "predmet": "PREDMET3",
         "brojPredavanjaSedmicno": 3,
         "brojVjezbiSedmicno": 2
     }

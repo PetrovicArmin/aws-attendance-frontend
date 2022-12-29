@@ -9,6 +9,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="../css/predmeti.css">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../css/prisustvo.css">
   <title>Dashboard</title>
 </head>
 <body>
@@ -16,7 +18,7 @@
     <a id="username" class="navbar-brand" href="#">Greetings,</a>
       <ul class="navbar-nav ml-auto">
         <li class="nav-item logout">
-            <a class="nav-link" href="#" onclick="PoziviAjax.postLogout((err, data) =>{if(err){console.log(err); return;} window.location.replace('http://localhost:3000/prijava');})">Logout</a>
+            <a class="nav-link" href="#" onclick="PoziviAjax.postLogout(callbackLogout)">Logout</a>
         </li>
     </ul>
   </nav>
@@ -41,14 +43,15 @@
           </li>
         </ul>
       </div>
-      <div class="col-10">
+      <div  class="col-10">
         <br>
-        Ovdje ide moja tabela!
+        <div id="divSadrzaj"></div>
       </div>
     </div>
   </div>
 
   <script src="scripts/poziviAjax.js"></script>
+  <script src="scripts/TabelaPrisustvo.js"></script>
   <script src="scripts/predmeti.js"></script>
 </body>
 </html>

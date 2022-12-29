@@ -61,10 +61,21 @@ app.get('/predmeti', (req, res) => {
 //TODO: implementirati da se vraćaju prava prisustva u ovisnosti od naziva predmeta!
 app.get('/predmet/:naziv', (req, res) => {
     fs.readFile('data/prisustva.json', (error, data) => {
+        if (error) {
+            res.json({'poruka': 'Postoje neki errori!'});
+            return;
+        }
+
+        let prisustva = JSON.parse(data);
+        const objekat_prisustvo = prisustva.find((obj) => obj.predmet == req.params.naziv);
         
+        if (!objekat_prisustvo) {
+            res.json({'poruka': 'Ne postoji promatrani predmet!'});
+            return;
+        }
+
+        res.json({ 'prisustvo' : objekat_prisustvo });
     });
-    console.log("Ime predmeta je : " + req.params.naziv);
-    res.json({predmeti: req.params.naziv});
 });
 
 

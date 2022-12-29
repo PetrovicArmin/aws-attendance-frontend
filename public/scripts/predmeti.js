@@ -23,11 +23,34 @@ window.onload = () => {
     });
 };
 
+const callbackLogout = (err, data) => {
+    if(err) { 
+        console.log(err); 
+        return;
+    } 
+    window.location.replace('http://localhost:3000/prijava.html');
+}
+
 const callbackPredmet = (err, data) => {
     if (err) {
         console.log(err);
         return;
     }
 
-    console.log("Vraćeni podaci su: " + data.predmeti);
+    if (data.poruka) {
+        console.log(data.poruka)
+        return;
+    }
+    
+    //iscrtavanje podataka na ekran!
+    TabelaPrisustvoClickable(document.getElementById('divSadrzaj'), data.prisustvo);
+}
+
+const prisustvaCallback = (err, data) => {
+    if (err) {
+        console.log(err);
+        return;
+    }   
+
+    console.log(data.prisustvo);
 }
