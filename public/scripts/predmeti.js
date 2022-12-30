@@ -17,7 +17,7 @@ const initialActions = () => {
         predmetiUl.innerHTML = "";
 
         for (let predmet of data.predmeti) 
-            predmetiUl.innerHTML += `<li class="nav-item" onclick="PoziviAjax.getPredmet('${predmet}', callbackPredmet)"> \n <a class="nav-link" href="#">${predmet}</a> \n </li>`;
+            predmetiUl.innerHTML += `<li class="nav-item shadow" onclick="PoziviAjax.getPredmet('${predmet}', callbackPredmet)"> \n <a class="nav-link" href="#">${predmet}</a> \n </li>\n`;
     });
 };
 

@@ -17,5 +17,6 @@ const prisustvaCallback = (err, data) => {
         console.log(data.poruka);
         return;
     }
+    
     TabelaPrisustvoClickable(div, data.prisustvo, data.sedmica);
 }

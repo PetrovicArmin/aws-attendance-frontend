@@ -10,9 +10,18 @@ body {
     min-width: 550px;
 }
 
-a:hover {
-    cursor:pointer;
+a:active {
+    cursor:grab;
 }
+
+.shadow {
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0); /* start with no shadow */
+    transition: box-shadow 0.2s; /* add a transition to make the animation smooth */
+  }
+  
+  .shadow:hover {
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2); /* add a shadow on hover */
+  }
 
 .no_padding {
     padding: 0px;
