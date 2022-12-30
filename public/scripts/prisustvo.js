@@ -1,3 +1,8 @@
+if (!localStorage.getItem('prisustvo')) {
+    alert("Ilegalno ste pristupili ovoj stranici!");
+    window.location.replace("http://localhost:3000/prijava.html");
+}
+
 let div = document.getElementById("divSadrzaj");
 const prisustvo = JSON.parse(localStorage.getItem('prisustvo'));
 TabelaPrisustvoClickable(div, prisustvo);

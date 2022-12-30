@@ -47,6 +47,16 @@ p {
     text-align: center;
 }
 
+.popup {
+    transform: translateY(0); /* start at the original position */
+    transition: transform 0.2s; /* add a transition to make the animation smooth */
+}
+  
+.popup:hover {
+    cursor: pointer;
+    transform: translateY(-2px); /* lift the element 10px up on hover */
+}
+
 @media only screen and (max-width: 683px) {
     html {
         min-width: 685px;

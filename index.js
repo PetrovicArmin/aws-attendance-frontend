@@ -98,9 +98,6 @@ app.post('/prisustvo/predmet/:naziv/student/:index', (req, res) => {
         zapis.predavanja = req.body.predavanja;
         zapis.vjezbe = req.body.vjezbe;
 
-        console.log("Novi zapis: ");
-        console.log(zapis);
-
         fs.writeFile('data/prisustva.json', JSON.stringify(prisustva), (err) => {
             if (err) {
                 res.json({'poruka': "Greška prilikom modifikovanja prisustava na disku!"});

@@ -207,13 +207,13 @@ const KreirajTabeluClickable = (podaci, trenutnaSedmica) => {
             } else {
                 p = prisustvoTrenutneSedmice;
                 for (let k = 1; k <= prisustvoTrenutneSedmice.predavanja; k++)
-                    red += `<td class="zelena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe}, 'predavanja': ${p.predavanja-1}}, prisustvaCallback)"> <br> </td> \n`;
+                    red += `<td class="zelena popup" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe}, 'predavanja': ${p.predavanja-1}}, prisustvaCallback)"> <br> </td> \n`;
                 for (let k = prisustvoTrenutneSedmice.predavanja + 1; k <= brPredavanja; k++)
-                    red += `<td class="crvena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe}, 'predavanja': ${p.predavanja+1}}, prisustvaCallback)"> <br> </td> \n`;
+                    red += `<td class="crvena popup" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe}, 'predavanja': ${p.predavanja+1}}, prisustvaCallback)"> <br> </td> \n`;
                 for (let k = 1; k <= prisustvoTrenutneSedmice.vjezbe; k++)
-                    red += `<td class="zelena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe-1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)"> <br> </td> \n`;
+                    red += `<td class="zelena popup" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe-1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)"> <br> </td> \n`;
                 for (let k = prisustvoTrenutneSedmice.vjezbe + 1; k <= brVjezbi; k++)
-                    red += `<td class="crvena" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe+1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)"> <br> </td> \n`;            
+                    red += `<td class="crvena popup" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${p.sedmica}, 'vjezbe': ${p.vjezbe+1}, 'predavanja': ${p.predavanja}}, prisustvaCallback)"> <br> </td> \n`;            
             }
         }
 

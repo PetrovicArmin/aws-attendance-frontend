@@ -42,11 +42,6 @@ const PoziviAjax = (()=>{
     }
     //prisustvo ima oblik {sedmica:N,predavanja:P,vjezbe:V}
     function impl_postPrisustvo(naziv,index,prisustvo,fnCallback){
-        console.log("podaci koje sam dobio:");
-        console.log("ime predmeta: '" + naziv + "'");
-        console.log("Indeks studenta: " + index);
-        console.log("(predavanja, vjezbi, sedmica) = (" + prisustvo.predavanja + ", " + prisustvo.vjezbe + ", " + prisustvo.sedmica + ")!");
-
         fetch(`http://localhost:3000/prisustvo/predmet/${naziv}/student/${index}`, {
             method: "POST",
             headers: {
