@@ -11,7 +11,7 @@ const initialActions = () => {
         }
 
         
-        document.getElementById('username').innerHTML = `Greetings, ${data.username}`;
+        document.getElementById('username').innerHTML = `Dobrodošli, ${data.username}`;
 
         const predmetiUl = document.getElementById('predmeti');
         predmetiUl.innerHTML = "";
