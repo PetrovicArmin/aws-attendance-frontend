@@ -2,9 +2,20 @@ li:hover {
     background-color: aliceblue;
 }
 
+a {
+    color: #8a8f9b;
+}
+
 html {
     min-width: 500px;
 }
+
+li a:focus {
+    /* styles to apply when the list item is focused */
+    outline: none;
+    background-color: #d6dae3;
+    color: black;
+  }
 
 body {
     min-width: 550px;
@@ -19,9 +30,9 @@ a:active {
     transition: box-shadow 0.2s; /* add a transition to make the animation smooth */
   }
   
-  .shadow:hover {
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2); /* add a shadow on hover */
-  }
+.shadow:hover {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2); /* add a shadow on hover */
+}
 
 .no_padding {
     padding: 0px;

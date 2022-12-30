@@ -1,3 +1,5 @@
+const div = document.getElementById('divSadrzaj');
+
 const initialActions = () => {
     PoziviAjax.getPredmeti((err, data) => {
         if (err) {
@@ -42,7 +44,19 @@ const callbackPredmet = (err, data) => {
         return;
     }
 
-    localStorage.setItem('prisustvo', JSON.stringify(data.prisustvo));
-    window.location.replace("http://localhost:3000/prisustvo.html");
+    TabelaPrisustvoClickable(div, data.prisustvo);
 }
 
+const prisustvaCallback = (err, data) => {
+    if (err) {
+        console.log(err);
+        return;
+    }   
+
+    if (data.poruka) {
+        console.log(data.poruka);
+        return;
+    }
+    
+    TabelaPrisustvoClickable(div, data.prisustvo, data.sedmica);
+}
