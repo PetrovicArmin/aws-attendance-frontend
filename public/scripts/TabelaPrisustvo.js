@@ -201,9 +201,9 @@ const KreirajTabeluClickable = (podaci, trenutnaSedmica) => {
         if (zadnjaSedmica) {
             if (prisustvoTrenutneSedmice == null) {
                 for (let j = 1; j <= brPredavanja; j++)
-                    red += `<td> <br> </td> \n`;
+                    red += `<td class="popup" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${trenutnaSedmica}, 'vjezbe': 0, 'predavanja': 1}, prisustvaCallback)"> <br> </td> \n`;
                 for (let j = 1; j <= brVjezbi; j++)
-                    red += `<td> <br> </td> \n`;
+                    red += `<td class="popup" onclick="PoziviAjax.postPrisustvo('${podaci.predmet}', ${student.index}, {'sedmica': ${trenutnaSedmica}, 'vjezbe': 1, 'predavanja': 0}, prisustvaCallback)"> <br> </td> \n`;
             } else {
                 p = prisustvoTrenutneSedmice;
                 for (let k = 1; k <= prisustvoTrenutneSedmice.predavanja; k++)

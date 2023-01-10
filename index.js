@@ -92,10 +92,21 @@ app.post('/prisustvo/predmet/:naziv/student/:index', (req, res) => {
             res.json({'poruka': 'Ne postoji promatrani predmet!'});
             return;
         }
+        
+        let zapis = objekat_prisustvo.prisustva.find(element => element.sedmica == Number(req.body.sedmica) && element.index == Number(req.params.index));
 
-        let zapis = objekat_prisustvo.prisustva.find(element => element.sedmica == req.body.sedmica && element.index == req.params.index);
-        zapis.predavanja = req.body.predavanja;
-        zapis.vjezbe = req.body.vjezbe;
+        if (!zapis) {
+            zapis = {
+                sedmica: Number(req.body.sedmica),
+                predavanja: 0,
+                vjezbe: 0,
+                index: Number(req.params.index) 
+            };
+            objekat_prisustvo.prisustva.push(zapis);
+        }
+
+        zapis.predavanja = Number(req.body.predavanja);
+        zapis.vjezbe = Number(req.body.vjezbe);
 
         fs.writeFile('data/prisustva.json', JSON.stringify(prisustva), (err) => {
             if (err) {
