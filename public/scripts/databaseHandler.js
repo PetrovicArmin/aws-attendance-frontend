@@ -91,7 +91,7 @@ const fillDatabase = () => {
 
         //dodjela predmeta profesorima
         await nastavnici[0].addPredmets([predmeti[0], predmeti[1]]);
-        await nastavnici[1].addPredmets([predmeti[0], predmeti[1]]);
+        await nastavnici[1].addPredmets([predmeti[1], predmeti[2]]);
 
         //upisivanje studenata na predmete
         await predmeti[0].addStudents([studenti[0], studenti[1], studenti[2]]);
@@ -212,9 +212,7 @@ const syncDatabase = async (generisiDummyPodatke) => {
         if (generisiDummyPodatke) 
             fillDatabase();        
         //linija ispod je čisto testna!
-        console.log(await kreirajPrisustvoPredmeta('Predmet 2'));
-        await azurirajISpremiPrisustvo('Predmet 2', {sedmica: 6, predavanja: 2, vjezbe: 3, index: 4});
-        console.log(await kreirajPrisustvoPredmeta('Predmet 2'));
+        await pronadjiNastavnika('USERNAME 1');
     });
 
 };
@@ -263,7 +261,14 @@ const kreirajPrisustvoPredmeta = async (nazivPredmeta) => {
 };
 
 const pronadjiNastavnika = async (username) => {
-
+    let nastavnik = await tabela.Nastavnik.findOne({where: {username}, include: {model: tabela.Predmet}});
+    nastavnik = nastavnik.dataValues;
+    nastavnik = {
+        username: nastavnik.username,
+        password_hash: nastavnik.passwordHash,
+        predmeti: nastavnik.Predmets.map(predmet => predmet.dataValues.naziv)
+    };
+    console.log(nastavnik);
 }
 
 const azurirajISpremiPrisustvo = async (nazivPredmeta, objekatPrisustva) => {
