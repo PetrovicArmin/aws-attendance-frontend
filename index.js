@@ -5,8 +5,13 @@ import bodyParser from 'body-parser';
 import fs from 'fs';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
+import DatabaseHandler from './public/scripts/databaseHandler.js';
 
 const app = express();
+
+/////
+DatabaseHandler.syncDatabase();
+////
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = __filename.substring(0, __filename.lastIndexOf('/'));
