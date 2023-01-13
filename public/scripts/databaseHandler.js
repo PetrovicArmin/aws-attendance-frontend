@@ -213,6 +213,8 @@ const syncDatabase = async (generisiDummyPodatke) => {
             fillDatabase();        
         //linija ispod je čisto testna!
         console.log(await kreirajPrisustvoPredmeta('Predmet 2'));
+        await azurirajPrisustvo('Predmet 2', {sedmica: 5, predavanja: 0, vjezbe: 0, index: 4});
+        console.log(await kreirajPrisustvoPredmeta('Predmet 2'));
     });
 
 };
@@ -264,8 +266,11 @@ const pronadjiNastavnika = async (username) => {
 
 }
 
-const spremiPrisustvo = async (objekatPrisustva) => {
-
+const azurirajPrisustvo = async (nazivPredmeta, objekatPrisustva) => {
+    const student = await tabela.Student.findOne({where: {index: objekatPrisustva.index}});
+    const predmet = await tabela.Predmet.findOne({where: {naziv: nazivPredmeta}});
+    const predmetStudent = await tabela.PredmetStudent.findOne({where: {StudentId: student.dataValues.id, PredmetId: predmet.dataValues.id}});
+    await tabela.Prisustvo.update({ predavanja: objekatPrisustva.predavanja, vjezbe: objekatPrisustva.vjezbe }, {where: { sedmica: objekatPrisustva.sedmica, PredmetStudentId: predmetStudent.dataValues.id }});    
 }
 
 const DatabaseHandler = {
