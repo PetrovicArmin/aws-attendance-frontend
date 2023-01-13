@@ -78,45 +78,32 @@ app.get('/predmet/:naziv', async (req, res) => {
 });
 
 
-app.post('/prisustvo/predmet/:naziv/student/:index', (req, res) => {
-    fs.readFile('data/prisustva.json', (error, data) => {
-        if (error) {
-            res.json({'poruka': 'Postoje neki errori!'});
-            return;
-        }
+app.post('/prisustvo/predmet/:naziv/student/:index', async (req, res) => {
+    const objekat_prisustvo = await DatabaseHandler.kreirajPrisustvoPredmeta(req.params.naziv);
+    
+    if (!objekat_prisustvo) {
+        res.json({'poruka': 'Ne postoji promatrani predmet!'});
+        return;
+    }
+    
+    let zapis = objekat_prisustvo.prisustva.find(element => element.sedmica == Number(req.body.sedmica) && element.index == Number(req.params.index));
 
-        let prisustva = JSON.parse(data);
-        const objekat_prisustvo = prisustva.find((obj) => obj.predmet == req.params.naziv);
-        
-        if (!objekat_prisustvo) {
-            res.json({'poruka': 'Ne postoji promatrani predmet!'});
-            return;
-        }
-        
-        let zapis = objekat_prisustvo.prisustva.find(element => element.sedmica == Number(req.body.sedmica) && element.index == Number(req.params.index));
+    if (!zapis) {
+        zapis = {
+            sedmica: Number(req.body.sedmica),
+            predavanja: 0,
+            vjezbe: 0,
+            index: Number(req.params.index) 
+        };
+        objekat_prisustvo.prisustva.push(zapis);
+    }
 
-        if (!zapis) {
-            zapis = {
-                sedmica: Number(req.body.sedmica),
-                predavanja: 0,
-                vjezbe: 0,
-                index: Number(req.params.index) 
-            };
-            objekat_prisustvo.prisustva.push(zapis);
-        }
+    zapis.predavanja = Number(req.body.predavanja);
+    zapis.vjezbe = Number(req.body.vjezbe);
 
-        zapis.predavanja = Number(req.body.predavanja);
-        zapis.vjezbe = Number(req.body.vjezbe);
+    await DatabaseHandler.azurirajISpremiPrisustvo(req.params.naziv, zapis);
 
-        fs.writeFile('data/prisustva.json', JSON.stringify(prisustva), (err) => {
-            if (err) {
-                res.json({'poruka': "Greška prilikom modifikovanja prisustava na disku!"});
-                return;
-            }
-
-            res.json({'prisustvo': objekat_prisustvo, 'sedmica': req.body.sedmica});
-        });
-    });
+    res.json({'prisustvo': objekat_prisustvo, 'sedmica': req.body.sedmica});
 });
 
 app.post('/login', (req, res) => {
