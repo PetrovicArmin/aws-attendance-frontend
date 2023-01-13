@@ -1,17 +1,127 @@
-import { Sequelize } from "sequelize";
+import { INTEGER, Sequelize } from "sequelize";
+
+function getRandomIntInclusive(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min; //The maximum is inclusive and the minimum is inclusive 
+  }
 
 const tabela = {
     Nastavnik: null,
     Predmet: null,
     Student: null,
     Prisustvo: null,
-    PredmetStudent: null
+    PredmetStudent: null,
+    NastavnikPredmet: null
 };
 
 let sequelize = null;
 
+
+const fillDatabase = () => {
+    let dummyNastavnici = [
+        {
+            username: 'USERNAME 1',
+            passwordHash: '$2b$10$bUTsm3k/AUKFLGcGnd5ldeUBabAH5RyQ7f3WwuQihr.l25O3f.8lq'
+        },
+        {
+            username: 'USERNAME 2',
+            passwordHash: '$2b$10$jlO9.ZlbdAlax/4sylu9nuq/RKCmqLpaTFQeoeo1YeUBv02X39Ya2'
+        }
+    ];
+
+    let dummyStudenti = [
+        {
+            naziv: 'Student 1',
+            index: 1
+        },
+        {
+            naziv: 'Student 2',
+            index: 2
+        },
+        {
+            naziv: 'Student 3',
+            index: 3
+        },
+        {
+            naziv: 'Student 4',
+            index: 4
+        },
+        {
+            naziv: 'Student 5',
+            index: 5
+        }
+    ];
+
+    let dummyPredmeti = [
+        {
+            naziv:'Predmet 1',
+            predavanja:5,
+            vjezbe:3
+        },
+        {
+            naziv:'Predmet 2',
+            predavanja:4,
+            vjezbe: 4
+        },
+        {
+            naziv:'Predmet 3',
+            predavanja: 3,
+            vjezbe: 5
+        }
+    ];
+
+
+    tabela.Nastavnik.bulkCreate(dummyNastavnici).then(() => console.log('Kreirani dummy nastavnici!'));
+    tabela.Student.bulkCreate(dummyStudenti).then(() => console.log('Kreirani dummy studenti!'));
+
+    const nastavnici = [];
+    const predmeti = [];
+    const studenti = [];
+
+    tabela.Predmet.bulkCreate(dummyPredmeti).then(async () => {
+        for (let i = 1; i <= 2; i++)
+            nastavnici.push(await tabela.Nastavnik.findOne({where: { username: `USERNAME ${i}`}}));
+
+        for (let i = 1; i <= 3; i++)
+            predmeti.push(await tabela.Predmet.findOne({where: { naziv: `Predmet ${i}`}}));
+
+        for (let i = 1; i <= 5; i++)
+            studenti.push(await tabela.Student.findOne({where: { naziv: `Student ${i}`}}));
+
+        //dodjela predmeta profesorima
+        await nastavnici[0].addPredmets([predmeti[0], predmeti[1]]);
+        await nastavnici[1].addPredmets([predmeti[0], predmeti[1]]);
+
+        //upisivanje studenata na predmete
+        await predmeti[0].addStudents([studenti[0], studenti[1], studenti[2]]);
+        await predmeti[1].addStudents([studenti[1], studenti[2], studenti[3]]);
+        await predmeti[2].addStudents([studenti[2], studenti[3], studenti[4]]);
+
+        //popunjavanje prisustva za svakog od studenata, na svakom od predmeta:
+        let predmetStudent = await tabela.PredmetStudent.findAll({include: [{model:tabela.Predmet},{model: tabela.Student}]});
+
+        for (let ps of predmetStudent) {
+            let brojSedmica = getRandomIntInclusive(0, 13);
+            const prisustva = [];
+            for (let trenutnaSedmica = 1; trenutnaSedmica <= brojSedmica; trenutnaSedmica++) {
+                const randomPredavanja = getRandomIntInclusive(0, ps.dataValues.Predmet.predavanja);
+                const randomVjezbe = getRandomIntInclusive(0, ps.dataValues.Predmet.vjezbe);
+                prisustva.push({
+                    sedmica: trenutnaSedmica,
+                    predavanja: randomPredavanja,
+                    vjezbe: randomVjezbe,
+                    PredmetStudentId: ps.dataValues.id
+                });
+            }
+
+            await tabela.Prisustvo.bulkCreate(prisustva);
+        }
+    });
+}
+
 //funkcije za eksport našeg modula
-const syncDatabase = () => {
+const syncDatabase = (generisiDummyPodatke) => {
     sequelize = new Sequelize("wt22", "root", "password", {
         host: "127.0.0.1",
         dialect: "mysql"
@@ -48,63 +158,63 @@ const syncDatabase = () => {
         naziv: Sequelize.STRING,
         index: Sequelize.INTEGER
     });
-
-    tabela.Prisustvo = sequelize.define('Prisustvo', {
+    
+    tabela.NastavnikPredmet = sequelize.define('NastavnikPredmet', {});
+    
+    tabela.PredmetStudent = sequelize.define('PredmetStudent', {
         id: {
             type: Sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true
+        }
+    });
+    
+    tabela.Prisustvo = sequelize.define('Prisustvo', {
+        PredmetStudentId: {
+            type: Sequelize.INTEGER,
+            primaryKey: true,
+            references: {
+                model: tabela.PredmetStudent,
+                key: 'id'
+            } 
         },
-        sedmica: Sequelize.INTEGER,
+        sedmica: {
+            type: Sequelize.INTEGER,
+            primaryKey: true
+        },
         predavanja: Sequelize.INTEGER,
         vjezbe: Sequelize.INTEGER
     });
-
-    tabela.PredmetStudent = sequelize.define('PredmetStudent', {
-        student_id: {
-            type: Sequelize.INTEGER,
-            references: {
-                model: tabela.Student,
-                key: 'id'
-            }
-        },
-        predmet_id: {
-            type: Sequelize.INTEGER,
-            references: {
-                model: tabela.Predmet,
-                key: 'id'
-            }
-        }
-    });
-
+    
     //asocijacije između tabela
-    tabela.Nastavnik.hasMany(tabela.Predmet, {
-        foreignKey: 'nastavnik_id'
-    });
-    tabela.Predmet.belongsTo(tabela.Nastavnik);
+    tabela.Nastavnik.belongsToMany(tabela.Predmet, { through: tabela.NastavnikPredmet });
+    tabela.Predmet.belongsToMany(tabela.Nastavnik, { through: tabela.NastavnikPredmet });
 
+    tabela.Nastavnik.hasMany(tabela.NastavnikPredmet);
+    tabela.NastavnikPredmet.belongsTo(tabela.Nastavnik);
 
+    tabela.Predmet.hasMany(tabela.NastavnikPredmet);
+    tabela.NastavnikPredmet.belongsTo(tabela.Predmet);
 
-    tabela.Predmet.hasMany(tabela.Prisustvo, {
-        foreignKey: 'predmet_id'
-    });
-    tabela.Prisustvo.belongsTo(tabela.Predmet);
+    tabela.Predmet.hasMany(tabela.PredmetStudent);
+    tabela.PredmetStudent.belongsTo(tabela.Predmet);
 
-
-
-    tabela.Student.hasMany(tabela.Prisustvo, {
-        foreignKey: 'student_id'
-    });
-    tabela.Prisustvo.belongsTo(tabela.Student);
-
-
+    tabela.Student.hasMany(tabela.PredmetStudent);
+    tabela.PredmetStudent.belongsTo(tabela.Student);
 
     tabela.Predmet.belongsToMany(tabela.Student, { through: tabela.PredmetStudent });
     tabela.Student.belongsToMany(tabela.Predmet, { through: tabela.PredmetStudent });
 
+    tabela.PredmetStudent.hasMany(tabela.Prisustvo);
+    tabela.Prisustvo.belongsTo(tabela.PredmetStudent);
+
+    //dok smo u test fazi stavit ćemo da je force true, da se svaki put generiše nova baza podataka.
     sequelize.sync().then(() => {
-        //popuniti dummy podacima ove tabele koje smo napravili!
+        if (generisiDummyPodatke) 
+            fillDatabase();        
     });
+
+
 };
 
 const DatabaseHandler = {

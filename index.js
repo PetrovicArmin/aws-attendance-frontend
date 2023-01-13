@@ -10,7 +10,10 @@ import DatabaseHandler from './public/scripts/databaseHandler.js';
 const app = express();
 
 /////
-DatabaseHandler.syncDatabase();
+/////parametar govori da li želite da generišete neke dummy podatke.
+//ukoliko ostavite false, neće se generisati nikakvi podaci.
+//ako postavite na true, generišu se testni podaci za bazu podataka.
+DatabaseHandler.syncDatabase(false);
 ////
 
 const __filename = fileURLToPath(import.meta.url);
