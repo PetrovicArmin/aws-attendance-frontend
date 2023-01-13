@@ -268,7 +268,7 @@ const pronadjiNastavnika = async (username) => {
         password_hash: nastavnik.passwordHash,
         predmeti: nastavnik.Predmets.map(predmet => predmet.dataValues.naziv)
     };
-    console.log(nastavnik);
+    return nastavnik;
 }
 
 const azurirajISpremiPrisustvo = async (nazivPredmeta, objekatPrisustva) => {
@@ -282,12 +282,15 @@ const azurirajISpremiPrisustvo = async (nazivPredmeta, objekatPrisustva) => {
         vjezbe: objekatPrisustva.vjezbe,
         PredmetStudentId: predmetStudent.dataValues.id
     });
+    
+    return objekatPrisustva;
 };
 
 const DatabaseHandler = {
     syncDatabase,
     kreirajPrisustvoPredmeta,
-    azurirajISpremiPrisustvo
+    azurirajISpremiPrisustvo,
+    pronadjiNastavnika
 };
 
 export default DatabaseHandler;

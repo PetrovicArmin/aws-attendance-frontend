@@ -66,23 +66,15 @@ app.get('/predmeti', (req, res) => {
     });
 });
 
-app.get('/predmet/:naziv', (req, res) => {
-    fs.readFile('data/prisustva.json', (error, data) => {
-        if (error) {
-            res.json({'poruka': 'Postoje neki errori!'});
-            return;
-        }
+app.get('/predmet/:naziv', async (req, res) => {
+    const objekat_prisustvo = await DatabaseHandler.kreirajPrisustvoPredmeta(req.params.naziv);
 
-        let prisustva = JSON.parse(data);
-        const objekat_prisustvo = prisustva.find((obj) => obj.predmet == req.params.naziv);
-        
-        if (!objekat_prisustvo) {
-            res.json({'poruka': 'Ne postoji promatrani predmet!'});
-            return;
-        }
+    if (!objekat_prisustvo) {
+        res.json({'poruka': 'Ne postoji promatrani predmet!'});
+        return;
+    }
 
-        res.json({ 'prisustvo' : objekat_prisustvo });
-    });
+    res.json({ 'prisustvo' : objekat_prisustvo });
 });
 
 
