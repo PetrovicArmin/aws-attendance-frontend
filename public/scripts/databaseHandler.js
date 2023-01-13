@@ -208,11 +208,9 @@ const syncDatabase = async (generisiDummyPodatke) => {
     tabela.PredmetStudent.hasMany(tabela.Prisustvo);
     tabela.Prisustvo.belongsTo(tabela.PredmetStudent);
 
-    sequelize.sync().then(async() => {
+    sequelize.sync().then(() => {
         if (generisiDummyPodatke) 
             fillDatabase();        
-        //linija ispod je čisto testna!
-        await pronadjiNastavnika('USERNAME 1');
     });
 
 };
@@ -222,8 +220,8 @@ const kreirajPrisustvoPredmeta = async (nazivPredmeta) => {
         studenti: [],
         prisustva: [],
         predmet: '',
-        predavanja: 0,
-        vjezbe: 0
+        brojPredavanjaSedmicno: 0,
+        brojVjezbiSedmicno: 0
     };
 
     const predmet = await tabela.Predmet.findOne({
@@ -236,8 +234,8 @@ const kreirajPrisustvoPredmeta = async (nazivPredmeta) => {
     });
 
     prisustvoPredmeta.predmet = predmet.dataValues.naziv;
-    prisustvoPredmeta.predavanja = predmet.dataValues.predavanja;
-    prisustvoPredmeta.vjezbe = predmet.dataValues.vjezbe;
+    prisustvoPredmeta.brojPredavanjaSedmicno = predmet.dataValues.predavanja;
+    prisustvoPredmeta.brojVjezbiSedmicno = predmet.dataValues.vjezbe;
 
     for (let ps of predmet.dataValues.PredmetStudents) {
         const student = await tabela.Student.findOne({ where: {id: ps.dataValues.StudentId}});

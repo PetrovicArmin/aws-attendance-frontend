@@ -348,6 +348,7 @@ const PopuniDivClickable = (div, podaci, trenutnaSedmica) => {
 
 
 let TabelaPrisustvoClickable = (divRef, podaci, trenutnaSedmica=0) => {
+    console.log(podaci);
     //inicijalno popunjavanje referentnog div-a
     let posljednjaSaPrisustvom = 0;
 

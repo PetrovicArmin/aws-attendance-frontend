@@ -7,12 +7,9 @@ import session from 'express-session';
 import DatabaseHandler from './public/scripts/databaseHandler.js';
 
 const app = express();
+let generisi_dummy_podatke = false; //ovo vi birate po svojoj želji!
 
-/////
-/////parametar govori da li želite da generišete neke dummy podatke.
-//ukoliko ostavite false, neće se generisati nikakvi podaci.
-//ako postavite na true, generišu se testni podaci za bazu podataka.
-await DatabaseHandler.syncDatabase(false);
+await DatabaseHandler.syncDatabase(generisi_dummy_podatke);
 ////
 
 const __filename = fileURLToPath(import.meta.url);
