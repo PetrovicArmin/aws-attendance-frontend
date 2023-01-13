@@ -13,7 +13,7 @@ const app = express();
 /////parametar govori da li želite da generišete neke dummy podatke.
 //ukoliko ostavite false, neće se generisati nikakvi podaci.
 //ako postavite na true, generišu se testni podaci za bazu podataka.
-DatabaseHandler.syncDatabase(false);
+await DatabaseHandler.syncDatabase(false);
 ////
 
 const __filename = fileURLToPath(import.meta.url);

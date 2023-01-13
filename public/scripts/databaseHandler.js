@@ -121,7 +121,7 @@ const fillDatabase = () => {
 }
 
 //funkcije za eksport našeg modula
-const syncDatabase = (generisiDummyPodatke) => {
+const syncDatabase = async (generisiDummyPodatke) => {
     sequelize = new Sequelize("wt22", "root", "password", {
         host: "127.0.0.1",
         dialect: "mysql"
@@ -208,14 +208,65 @@ const syncDatabase = (generisiDummyPodatke) => {
     tabela.PredmetStudent.hasMany(tabela.Prisustvo);
     tabela.Prisustvo.belongsTo(tabela.PredmetStudent);
 
-    //dok smo u test fazi stavit ćemo da je force true, da se svaki put generiše nova baza podataka.
-    sequelize.sync().then(() => {
+    sequelize.sync().then(async() => {
         if (generisiDummyPodatke) 
             fillDatabase();        
+        //linija ispod je čisto testna!
+        console.log(await kreirajPrisustvoPredmeta('Predmet 2'));
     });
 
-
 };
+
+const kreirajPrisustvoPredmeta = async (nazivPredmeta) => {
+    const prisustvoPredmeta = {
+        studenti: [],
+        prisustva: [],
+        predmet: '',
+        predavanja: 0,
+        vjezbe: 0
+    };
+
+    const predmet = await tabela.Predmet.findOne({
+        where: {
+            naziv: nazivPredmeta
+        },
+        include: {
+            model: tabela.PredmetStudent
+        }
+    });
+
+    prisustvoPredmeta.predmet = predmet.dataValues.naziv;
+    prisustvoPredmeta.predavanja = predmet.dataValues.predavanja;
+    prisustvoPredmeta.vjezbe = predmet.dataValues.vjezbe;
+
+    for (let ps of predmet.dataValues.PredmetStudents) {
+        const student = await tabela.Student.findOne({ where: {id: ps.dataValues.StudentId}});
+        prisustvoPredmeta.studenti.push({
+            ime: student.dataValues.naziv,
+            index: student.dataValues.index
+        });
+
+        const svaPrisustva = await tabela.Prisustvo.findAll({where: {PredmetStudentId: ps.dataValues.id}});
+        for (let trenutnoPrisustvo of svaPrisustva) {
+            prisustvoPredmeta.prisustva.push({
+                sedmica: trenutnoPrisustvo.dataValues.sedmica,
+                predavanja: trenutnoPrisustvo.dataValues.predavanja,
+                vjezbe: trenutnoPrisustvo.dataValues.vjezbe,
+                index: student.dataValues.index
+            });
+        }
+    }
+
+    return prisustvoPredmeta;
+};
+
+const pronadjiNastavnika = async (username) => {
+
+}
+
+const spremiPrisustvo = async (objekatPrisustva) => {
+
+}
 
 const DatabaseHandler = {
     syncDatabase
