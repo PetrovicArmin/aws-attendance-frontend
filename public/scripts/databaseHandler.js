@@ -261,8 +261,10 @@ const kreirajPrisustvoPredmeta = async (nazivPredmeta) => {
 };
 
 const pronadjiNastavnika = async (username) => {
-    let nastavnik = await tabela.Nastavnik.findOne({where: {username}, include: {model: tabela.Predmet}});
-    nastavnik = nastavnik.dataValues;
+    let nastavnici = await tabela.Nastavnik.findAll({where: {username}, include: {model: tabela.Predmet}});
+    if (nastavnici.length != 1)
+        return null;
+    let nastavnik = nastavnici[0].dataValues;
     nastavnik = {
         username: nastavnik.username,
         password_hash: nastavnik.passwordHash,
@@ -282,7 +284,7 @@ const azurirajISpremiPrisustvo = async (nazivPredmeta, objekatPrisustva) => {
         vjezbe: objekatPrisustva.vjezbe,
         PredmetStudentId: predmetStudent.dataValues.id
     });
-    
+
     return objekatPrisustva;
 };
 

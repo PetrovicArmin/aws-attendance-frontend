@@ -2,7 +2,6 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import bodyParser from 'body-parser';
-import fs from 'fs';
 import bcrypt from 'bcrypt';
 import session from 'express-session';
 import DatabaseHandler from './public/scripts/databaseHandler.js';
@@ -106,37 +105,26 @@ app.post('/prisustvo/predmet/:naziv/student/:index', async (req, res) => {
     res.json({'prisustvo': objekat_prisustvo, 'sedmica': req.body.sedmica});
 });
 
-app.post('/login', (req, res) => {
-    fs.readFile('data/nastavnici.json', (error, data) => {
-        if (error) {
-          res.json({'poruka': 'Neuspješna prijava'});
-          return;
-        }
-      
-        let nastavniciArray = JSON.parse(data);
+app.post('/login', async (req, res) => {
+    let nastavnik = await DatabaseHandler.pronadjiNastavnika(req.body.username);
 
-        nastavniciArray = nastavniciArray.filter(obj => obj.nastavnik.username == req.body.username);
+    if (!nastavnik) {
+        res.json({'poruka': 'Neuspješna prijava'});
+        return;
+    }
 
-        if (nastavniciArray.length != 1) {
+    bcrypt.compare(req.body.password, nastavnik.password_hash, (err, ista) => {
+        
+        if (err || !ista) {
             res.json({'poruka': 'Neuspješna prijava'});
             return;
         }
-
-        const zeljeni_objekat = nastavniciArray[0];
-
-        bcrypt.compare(req.body.password, zeljeni_objekat.nastavnik.password_hash, (err, ista) => {
-            
-            if (err || !ista) {
-                res.json({'poruka': 'Neuspješna prijava'});
-                return;
-            }
-            
-            req.session.username = req.body.username;
-            req.session.listaPredmeta = zeljeni_objekat.predmeti;
-            
-            res.json({'poruka': 'Uspješna prijava'});
-        });
-      });
+        
+        req.session.username = req.body.username;
+        req.session.listaPredmeta = nastavnik.predmeti;
+        
+        res.json({'poruka': 'Uspješna prijava'});
+    });
 });
 
 app.post("/logout", (req, res) => {
